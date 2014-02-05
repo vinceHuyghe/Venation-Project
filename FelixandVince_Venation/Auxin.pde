@@ -10,7 +10,8 @@ class Auxin{
   
   void display(){
     
-    stroke(0,200,255,100);
+    stroke(0,200,255);
+    strokeWeight(4);
     
     point(pos.x, pos.y);
   }
