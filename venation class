@@ -1,0 +1,15 @@
+import java.util.Iterator;
+
+int auxinCount = 500;
+
+Venatation v;
+
+void setup() {
+  size(1200,800);
+  background(30);
+  v = new Venatation();
+}
+
+void draw() {
+  v.runVenatation();
+}
