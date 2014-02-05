@@ -1,0 +1,118 @@
+import java.util.Iterator;
+
+int auxinCount = 500;
+
+Venatation v;
+
+void setup() {
+  size(1200,800);
+  background(30);
+  v = new Venatation();
+}
+
+void draw() {
+  v.runVenatation();
+}
+
+class Venatation {
+
+  // declare arraylist of Auxins
+  ArrayList<Auxin> allAuxins;
+  // declare arraylist of Root Particles
+  ArrayList<Root> allRoots;
+  // declare arraylist of new genartion of roots
+  ArrayList<Root> rootAdditions;
+  ArrayList<Integer> deadAuxinIds;
+
+  int closestId = -1;
+
+  float distance;
+  float currentClosest;
+
+  Venatation() {
+
+    initVenatation();
+
+  }
+
+  void initVenatation() {
+
+    allAuxins = new ArrayList<Auxin>();
+
+    // set auxin pos
+    for (int i = 0; i < auxinCount; i++) {
+     allAuxins.add(new Auxin(new PVector(random(width), random(height))));
+   }
+
+   allRoots = new ArrayList<Root>();
+
+   rootAdditions = new ArrayList<Root>();
+
+   deadAuxinIds = new ArrayList<Integer>();
+
+   allRoots.add(new Root(new PVector(width/2, height/2)));
+ }
+
+ void runVenatation() {
+
+  boolean removeA = false;
+
+  // attributes the roots with all of their closest auxins
+  for (int i = 0; i < allAuxins.size(); i++) {
+    removeA = false;
+    currentClosest = width+height;
+    closestId = -1;
+
+    for (int r = 0; r < allRoots.size(); r++) {
+
+      distance = PVector.dist(allAuxins.get(i).pos, allRoots.get(r).pos);
+      
+      if (distance < currentClosest) {
+        currentClosest = distance;
+        closestId = r;
+      }
+
+      if (distance < 10) {
+        removeA = true;
+        
+        // println("auxin removed");
+      } 
+    }
+
+    // add closest auxin to root particles closest list
+    allRoots.get(closestId).closestAuxins.add(allAuxins.get(i));
+    allAuxins.get(i).display();
+
+    if (removeA == true) {
+      allAuxins.remove(i);
+      i--;
+    }
+  }
+
+  // grow roots with respect to their closest Auxins
+
+  for (Root root : allRoots) {
+
+    // if the root particle has at least one auxin to grow towards
+
+    if (root.closestAuxins.size() > 0) {
+
+      root.grow(rootAdditions);
+    }
+
+    root.display(allAuxins);
+
+    // clear roots auxin list for next iteration
+
+    root.closestAuxins.clear();
+  }
+
+  // add the new root particles to the list
+
+  for (Root root : rootAdditions) {
+    allRoots.add(root);
+  }
+  rootAdditions.clear();
+
+}
+}
