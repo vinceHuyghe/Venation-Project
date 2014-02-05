@@ -29,17 +29,17 @@ void setup() {
 
   allAuxins = new ArrayList<Auxin>();
 
-  //  //set all positions of auxins
-  //  for (int i = 0; i < 2000; i++) {
-  //    allAuxins.add(new Auxin(new PVector(random(width), random(height))));
-  //  }
-
   //set all positions of auxins
-  for (int i = 0; i < 150; i++) {
-    for (int j = 0; j < 70; j++) {
-      allAuxins.add(new Auxin(new PVector(i*width/150, j*height/70)));
-    }
+  for (int i = 0; i < 2000; i++) {
+    allAuxins.add(new Auxin(new PVector(random(width), random(height))));
   }
+
+//  //set all positions of auxins in grid
+//  for (int i = 0; i < 150; i++) {
+//    for (int j = 0; j < 70; j++) {
+//      allAuxins.add(new Auxin(new PVector(i*width/150, j*height/70)));
+//    }
+//  }
 
 
   // initialise first Root particle
