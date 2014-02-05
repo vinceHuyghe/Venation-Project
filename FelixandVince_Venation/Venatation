@@ -1,19 +1,3 @@
-import java.util.Iterator;
-
-int auxinCount = 500;
-
-Venatation v;
-
-void setup() {
-  size(1200,800);
-  background(30);
-  v = new Venatation();
-}
-
-void draw() {
-  v.runVenatation();
-}
-
 class Venatation {
 
   // declare arraylist of Auxins
@@ -72,11 +56,13 @@ class Venatation {
         closestId = r;
       }
 
-      if (distance < 10) {
-        removeA = true;
-        
+      if (distance < 20) {
+        allAuxins.get(i).hAmount -= 20-distance;
         // println("auxin removed");
-      } 
+      }
+      if(allAuxins.get(i).hAmount <= 0){
+        removeA = true;
+      }
     }
 
     // add closest auxin to root particles closest list
@@ -113,6 +99,5 @@ class Venatation {
     allRoots.add(root);
   }
   rootAdditions.clear();
-
 }
 }
